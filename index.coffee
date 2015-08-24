@@ -1,4 +1,4 @@
-module = angular.module('adminr-core')
+module = angular.module('adminr-core',[])
 
 module.provider('ContainerManager',()->
   class ContainerManager
