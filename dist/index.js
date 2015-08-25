@@ -32,15 +32,15 @@ module.provider('ContainerManager', function() {
   return new ContainerManager();
 });
 
-module.directive('adminrShowContainer', function($templateCache, $compile, ContainerManager) {
+module.directive('adminrContainer', function($templateCache, $compile, ContainerManager) {
   return {
     strict: 'A',
     link: function($scope, $element, $attrs) {
       var container, view;
-      container = $scope.$eval($attrs['adminrShowContainer']);
+      container = $scope.$eval($attrs['adminrContainer']);
       view = ContainerManager.viewForContainer(container);
       if (!view) {
-        return $element.append($compile('<span>view for container \'' + container + '\' not set</span>')($scope));
+        return $element.append($compile('<span>view for container \'' + container + '\' not set (use ContainerManagerProvider.setViewForContainer(container,view))</span>')($scope));
       } else {
         return $element.append($compile('<span ng-include="\'' + view + '\'"></span>')($scope));
       }
