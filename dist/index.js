@@ -32,7 +32,7 @@ module.provider('ContainerManager', function() {
   return new ContainerManager();
 });
 
-module.directive('adminrContainer', function($templateCache, $compile, ContainerManager) {
+module.directive('adminrContainer', ["$templateCache", "$compile", "ContainerManager", function($templateCache, $compile, ContainerManager) {
   return {
     strict: 'A',
     link: function($scope, $element, $attrs) {
@@ -46,7 +46,7 @@ module.directive('adminrContainer', function($templateCache, $compile, Container
       }
     }
   };
-});
+}]);
 
 
 },{}]},{},[1]);
