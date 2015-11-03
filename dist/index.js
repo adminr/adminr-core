@@ -22,7 +22,10 @@ module.provider('ContainerManager', function() {
       return delete this.containerViews[container];
     };
 
-    ContainerManager.prototype.viewForContainer = function(container, view) {
+    ContainerManager.prototype.viewForContainer = function(container) {
+      if (typeof this.containerViews[container] === 'function') {
+        return this.containerViews[container]();
+      }
       return this.containerViews[container];
     };
 

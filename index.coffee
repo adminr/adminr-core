@@ -10,7 +10,9 @@ module.provider('ContainerManager',()->
     unsetViewForContainer:(container)->
       delete @containerViews[container]
 
-    viewForContainer:(container,view)->
+    viewForContainer:(container)->
+      if typeof @containerViews[container] is 'function'
+        return @containerViews[container]()
       return @containerViews[container]
 
     $get:()->
