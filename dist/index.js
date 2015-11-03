@@ -10,6 +10,10 @@ module.provider('ContainerManager', function() {
 
     ContainerManager.prototype.containerViews = {};
 
+    ContainerManager.prototype.setViewForRootContainer = function(view) {
+      return this.containerViews['_root'] = view;
+    };
+
     ContainerManager.prototype.setViewForContainer = function(container, view) {
       return this.containerViews[container] = view;
     };
@@ -48,6 +52,22 @@ module.directive('adminrContainer', ["$templateCache", "$compile", "ContainerMan
           return $element.append($compile('<span ng-include="\'' + view + '\'"></span>')($scope));
         }
       });
+    }
+  };
+}]);
+
+module.directive('adminrRootContainer', ["$templateCache", "$compile", "ContainerManager", function($templateCache, $compile, ContainerManager) {
+  return {
+    strict: 'A',
+    link: function($scope, $element, $attrs) {
+      var container, view;
+      container = 'root';
+      view = ContainerManager.viewForContainer(container);
+      if (!view) {
+        return $element.append($compile('<span>view for container \'' + container + '\' not set (use ContainerManagerProvider.setViewForContainer(container,view))</span>')($scope));
+      } else {
+        return $element.append($compile('<span ng-include="\'' + view + '\'"></span>')($scope));
+      }
     }
   };
 }]);
