@@ -11,7 +11,7 @@ module.provider('ContainerManager', function() {
     ContainerManager.prototype.containerViews = {};
 
     ContainerManager.prototype.setViewForRootContainer = function(view) {
-      return this.containerViews['_root'] = view;
+      return this.containerViews['root'] = view;
     };
 
     ContainerManager.prototype.setViewForContainer = function(container, view) {

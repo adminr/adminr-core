@@ -4,7 +4,7 @@ module.provider('ContainerManager',()->
   class ContainerManager
     containerViews: {}
     setViewForRootContainer:(view)->
-      @containerViews['_root'] = view
+      @containerViews['root'] = view
     setViewForContainer:(container,view)->
       @containerViews[container] = view
     unsetViewForContainer:(container)->
