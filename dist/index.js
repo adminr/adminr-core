@@ -44,11 +44,11 @@ module.directive('adminrContainer', ["$templateCache", "$compile", "ContainerMan
     strict: 'A',
     link: function($scope, $element, $attrs) {
       return $scope.$watch(function() {
-        return $attrs['adminrContainer'];
-      }, function() {
-        var container, view;
-        container = $scope.$eval($attrs['adminrContainer']);
+        return $scope.$eval($attrs['adminrContainer']);
+      }, function(container) {
+        var view;
         view = ContainerManager.viewForContainer(container);
+        $element.empty();
         if (!view) {
           return $element.append($compile('<span>view for container \'' + container + '\' not set (use ContainerManagerProvider.setViewForContainer(container,view))</span>')($scope));
         } else {

@@ -26,10 +26,10 @@ module.directive('adminrContainer',($templateCache,$compile,ContainerManager)->
   strict:'A'
   link:($scope,$element,$attrs)->
     $scope.$watch(()->
-      return $attrs['adminrContainer']
-    ,()->
-      container = $scope.$eval($attrs['adminrContainer'])
+      return $scope.$eval($attrs['adminrContainer'])
+    ,(container)->
       view = ContainerManager.viewForContainer(container)
+      $element.empty()
       if not view
         $element.append($compile('<span>view for container \''+container+'\' not set (use ContainerManagerProvider.setViewForContainer(container,view))</span>')($scope))
       else
