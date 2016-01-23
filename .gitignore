@@ -52,7 +52,6 @@ bower_components/
 *.log
 
 build/
-dist/
 ### Node template
 # Logs
 logs
