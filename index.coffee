@@ -1,6 +1,6 @@
 module = angular.module('adminr-core',[])
 
-module.provider('ContainerManager',()->
+module.provider('AdminrContainerManager',()->
   class ContainerManager
     containerViews: {}
     setViewForRootContainer:(view)->
@@ -21,31 +21,31 @@ module.provider('ContainerManager',()->
   return new ContainerManager()
 )
 
-module.directive('adminrContainer',($templateCache,$compile,ContainerManager)->
+module.directive('adminrContainer',($templateCache,$compile,AdminrContainerManager)->
   return {
   strict:'A'
   link:($scope,$element,$attrs)->
     $scope.$watch(()->
       return $scope.$eval($attrs['adminrContainer'])
     ,(container)->
-      view = ContainerManager.viewForContainer(container)
+      view = AdminrContainerManager.viewForContainer(container)
       $element.empty()
       if not view
-        $element.append($compile('<span>view for container \''+container+'\' not set (use ContainerManagerProvider.setViewForContainer(container,view))</span>')($scope))
+        $element.append($compile('<span>view for container \''+container+'\' not set (use AdminrContainerManagerProvider.setViewForContainer(container,view))</span>')($scope))
       else
         $element.append($compile('<span ng-include="\'' + view + '\'"></span>')($scope))
     )
   }
 )
 
-module.directive('adminrRootContainer',($templateCache,$compile,ContainerManager)->
+module.directive('adminrRootContainer',($templateCache,$compile,AdminrContainerManager)->
   return {
   strict:'A'
   link:($scope,$element,$attrs)->
     container = 'root'
-    view = ContainerManager.viewForContainer(container)
+    view = AdminrContainerManager.viewForContainer(container)
     if not view
-      $element.append($compile('<span>view for container \''+container+'\' not set (use ContainerManagerProvider.setViewForContainer(container,view))</span>')($scope))
+      $element.append($compile('<span>view for container \''+container+'\' not set (use AdminrContainerManagerProvider.setViewForContainer(container,view))</span>')($scope))
     else
       $element.append($compile('<span ng-include="\'' + view + '\'"></span>')($scope))
   }
