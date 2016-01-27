@@ -39,41 +39,45 @@ module.provider('AdminrContainerManager', function() {
   return new ContainerManager();
 });
 
-module.directive('adminrContainer', ["$templateCache", "$compile", "AdminrContainerManager", function($templateCache, $compile, AdminrContainerManager) {
-  return {
-    strict: 'A',
-    link: function($scope, $element, $attrs) {
-      return $scope.$watch(function() {
-        return $scope.$eval($attrs['adminrContainer']);
-      }, function(container) {
-        var view;
+module.directive('adminrContainer', [
+  '$templateCache', '$compile', 'AdminrContainerManager', function($templateCache, $compile, AdminrContainerManager) {
+    return {
+      strict: 'A',
+      link: function($scope, $element, $attrs) {
+        return $scope.$watch(function() {
+          return $scope.$eval($attrs['adminrContainer']);
+        }, function(container) {
+          var view;
+          view = AdminrContainerManager.viewForContainer(container);
+          $element.empty();
+          if (!view) {
+            return $element.append($compile('<span>view for container \'' + container + '\' not set (use AdminrContainerManagerProvider.setViewForContainer(container,view))</span>')($scope));
+          } else {
+            return $element.append($compile('<span ng-include="\'' + view + '\'"></span>')($scope));
+          }
+        });
+      }
+    };
+  }
+]);
+
+module.directive('adminrRootContainer', [
+  '$templateCache', '$compile', 'AdminrContainerManager', function($templateCache, $compile, AdminrContainerManager) {
+    return {
+      strict: 'A',
+      link: function($scope, $element, $attrs) {
+        var container, view;
+        container = 'root';
         view = AdminrContainerManager.viewForContainer(container);
-        $element.empty();
         if (!view) {
           return $element.append($compile('<span>view for container \'' + container + '\' not set (use AdminrContainerManagerProvider.setViewForContainer(container,view))</span>')($scope));
         } else {
           return $element.append($compile('<span ng-include="\'' + view + '\'"></span>')($scope));
         }
-      });
-    }
-  };
-}]);
-
-module.directive('adminrRootContainer', ["$templateCache", "$compile", "AdminrContainerManager", function($templateCache, $compile, AdminrContainerManager) {
-  return {
-    strict: 'A',
-    link: function($scope, $element, $attrs) {
-      var container, view;
-      container = 'root';
-      view = AdminrContainerManager.viewForContainer(container);
-      if (!view) {
-        return $element.append($compile('<span>view for container \'' + container + '\' not set (use AdminrContainerManagerProvider.setViewForContainer(container,view))</span>')($scope));
-      } else {
-        return $element.append($compile('<span ng-include="\'' + view + '\'"></span>')($scope));
       }
-    }
-  };
-}]);
+    };
+  }
+]);
 
 
 },{}]},{},[1]);
