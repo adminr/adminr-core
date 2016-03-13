@@ -31,7 +31,8 @@ module.directive('adminrContainer',['$templateCache','$compile','AdminrContainer
         view = AdminrContainerManager.viewForContainer(container)
         $element.empty()
         if not view
-          $element.append($compile('<span>view for container \''+container+'\' not set (use AdminrContainerManagerProvider.setViewForContainer(container,view))</span>')($scope))
+          if typeof $attrs.optionalContainer is 'undefined'
+            $element.append($compile('<span>view for container \''+container+'\' not set (use AdminrContainerManagerProvider.setViewForContainer(container,view))</span>')($scope))
         else
           $element.append($compile('<span ng-include="\'' + view + '\'"></span>')($scope))
       )
